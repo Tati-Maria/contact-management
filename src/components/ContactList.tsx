@@ -1,4 +1,5 @@
 import Contact from './models';
+import NoContacts from './NoContacts';
 
 interface ContactListProps {
     contacts: Contact[];
@@ -14,22 +15,32 @@ const ContactList: React.FC<ContactListProps> = ({contacts, onEditContact, editC
   ? contacts.filter((c) => c.favorite) 
   : contacts;
 
+  const handleDelete =(id: string) => {
+    //the contact list will only have an id after its submition
+    const deleteId = id || '';
+    onDeleteContact(deleteId);
+  }
 
   return (
     <div>
-        {filteredContacts.map((contact, index) => (
+        {contacts.length === 0 ? (<NoContacts />) : (
+          filteredContacts.map((contact, index) => (
             <div key={contact.id}>
+              <div>
+                {contact.image && <img src={URL.createObjectURL(contact.image)} alt={contact.name} width="100px" height="100px"/>}
+              </div>
                 <h3>{contact.name}</h3>
                 <p>Email: {contact.email}</p>
                 <p>Phone: {contact.phone}</p>
                 {editContact?.email !== contact.email && 
                 (<>
                 <button onClick={() => onEditContact(contact)}>Edit</button>
-                <button onClick={() => onDeleteContact(contact.email)}>Delete</button>
+                <button onClick={() => handleDelete(contact.id!)}>Delete</button>
                 </>)}
                 
             </div>
-        ))}
+        ))
+        )} 
     </div>
   )
 }

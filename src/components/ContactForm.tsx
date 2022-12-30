@@ -1,5 +1,6 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useRef, ChangeEventHandler, ChangeEvent} from 'react';
 import Contact from './models';
+import {v4 as uuid} from "uuid";
 
 interface ContactFormProps {
    onAddcontact: (contact: Contact) => void;
@@ -9,11 +10,12 @@ interface ContactFormProps {
 
 const ContactForm: React.FC<ContactFormProps> = ({onAddcontact, editContact}) => {
   const [name, setName] = useState("");
-  const [id, setId] = useState("")
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [isFavorite, setIsFavorite] = useState(false);
-  const [picture, setPicture] = useState("");
+  const [image, setImage] = useState<File | null>(null);
+  const [imageUrl, setImageUrl] = useState<File | null>(null);
+  const formRef = useRef<HTMLFormElement>(null);
 
   //pre-populate the form with the contact's information to edit
 
@@ -23,46 +25,43 @@ useEffect(() => {
     setEmail(editContact.email);
     setPhone(editContact.phone);
     setIsFavorite(editContact.favorite);
-    setPicture(editContact.picture);
+    setImage(editContact.image);
   }
 
 }, [editContact]);
 
 //Handle picture change
-const handlePictureChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-  const file = event.target.files?.[0];
-  if(!file) {
-    return
-  }
+const handleImageChange = (event: ChangeEvent<HTMLInputElement>) => {
+  const file = event.target.files![0];
 
-  const reader = new FileReader();
-  reader.onload = () => {
-    if(reader.result) {
-      setPicture(reader.result as string);
-    }
-  };
-  reader.readAsDataURL(file);
-}
+  setImage(file!);
+
+  setImageUrl(file!);
+};
 
 //Submit the form
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const contact: Contact = {id, name, email, phone, favorite: isFavorite, picture};
-    onAddcontact(contact)
+    if(name === "" || phone === "" || email === "") {
+      //display an error message
+      return;
+    }
+    const contact: Contact = {id: uuid(), name, email, phone, favorite: isFavorite, image: image || new File ([], "")};
+    onAddcontact(contact);
+    if(formRef.current) {
+      formRef.current.reset();
+    }
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} ref={formRef}>
 
-      <label htmlFor="picture">Picture: </label>
-      <input type="file" 
-      accept='image/*' 
-      onChange={handlePictureChange} />
-      <br />
-      <img src={picture} alt={name} width="200px" height="200px" style={{borderRadius: "50%"}} />
+      <input type="file" onChange={handleImageChange} accept="image/png, image/jpeg, image/gif"  />
+      {imageUrl && <img src={URL.createObjectURL(imageUrl)} alt={name} width="100px" height="100px" style={{borderRadius: "50%"}}/>}
 
       <label htmlFor="name">Name: </label>
       <input type="text" 
+      required
       id="name" value={name} 
       onChange={e => setName(e.target.value)}
       placeholder="Enter your contact name" 
@@ -71,6 +70,7 @@ const handlePictureChange = (event: React.ChangeEvent<HTMLInputElement>) => {
       <label htmlFor="email">Email: </label>
       <input type="email" 
       value={email} 
+      required
       id="email"
       placeholder='Enter your contact email'
       onChange={e => setEmail(e.target.value)}
@@ -81,8 +81,10 @@ const handlePictureChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         name="phone" 
         id="phone"
         value={phone}
+        required
         onChange={e => setPhone(e.target.value)}
-        placeholder="Enter your contact phone number"
+        placeholder="###-###-####"
+        accept='^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$'
         />
 
          <label htmlFor="favorite">
