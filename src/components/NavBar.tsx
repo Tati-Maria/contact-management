@@ -1,14 +1,18 @@
-import {Link} from "react-router-dom";
+import {Link, Outlet} from "react-router-dom";
 import { Nav, Container } from 'react-bootstrap';
 
 const NavBar = () => {
   return (
+    <>
     <Nav>
         <Container>
-            <Link to="/">Contact List</Link>
-            <Link to="/addnewcontact">Add Contact</Link>
+          <h2>My Contacts</h2>
+            <Link to="/contact-list">Contact List</Link>
+            <Link to="/contact-form">Add Contact</Link>
         </Container>
     </Nav>
+    <Outlet />
+    </>
   )
 }
 

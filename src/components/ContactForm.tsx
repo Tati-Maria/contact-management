@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useRef, ChangeEventHandler, ChangeEvent} from 'react';
+import React, {useEffect, useState, useRef, ChangeEvent} from 'react';
 import Contact from './models';
 import {v4 as uuid} from "uuid";
 
@@ -13,9 +13,8 @@ const ContactForm: React.FC<ContactFormProps> = ({onAddcontact, editContact}) =>
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [isFavorite, setIsFavorite] = useState(false);
-  const [image, setImage] = useState<File | null>(null);
-  const [imageUrl, setImageUrl] = useState<File | null>(null);
-  const formRef = useRef<HTMLFormElement>(null);
+  const [image, setImage] = useState("");
+  const imageInput = useRef<HTMLInputElement>(null)
 
   //pre-populate the form with the contact's information to edit
 
@@ -32,11 +31,14 @@ useEffect(() => {
 
 //Handle picture change
 const handleImageChange = (event: ChangeEvent<HTMLInputElement>) => {
-  const file = event.target.files![0];
-
-  setImage(file!);
-
-  setImageUrl(file!);
+  const file = event.target.files?.[0];
+  if(file) {
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setImage(reader.result as string) //pass a string value
+    }
+    reader.readAsDataURL(file);
+  }
 };
 
 //Submit the form
@@ -46,18 +48,21 @@ const handleImageChange = (event: ChangeEvent<HTMLInputElement>) => {
       //display an error message
       return;
     }
-    const contact: Contact = {id: uuid(), name, email, phone, favorite: isFavorite, image: image || new File ([], "")};
+    const contact: Contact = {id: uuid(), name, email, phone, favorite: isFavorite, image: image };
     onAddcontact(contact);
-    if(formRef.current) {
-      formRef.current.reset();
+    setName("");
+    setEmail("");
+    setPhone("");
+    setIsFavorite(false);
+    if(imageInput.current) {
+      imageInput.current.value = "";
     }
   };
 
   return (
-    <form onSubmit={handleSubmit} ref={formRef}>
+    <form onSubmit={handleSubmit}>
 
-      <input type="file" onChange={handleImageChange} accept="image/png, image/jpeg, image/gif"  />
-      {imageUrl && <img src={URL.createObjectURL(imageUrl)} alt={name} width="100px" height="100px" style={{borderRadius: "50%"}}/>}
+      <input ref={imageInput} type="file" onChange={handleImageChange} accept="image/png, image/jpeg, image/gif"/>
 
       <label htmlFor="name">Name: </label>
       <input type="text" 

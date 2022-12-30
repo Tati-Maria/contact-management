@@ -18,7 +18,9 @@ const ContactList: React.FC<ContactListProps> = ({contacts, onEditContact, editC
   const handleDelete =(id: string) => {
     //the contact list will only have an id after its submition
     const deleteId = id || '';
-    onDeleteContact(deleteId);
+    if(confirm("Are you sure you want to delete this contact?")) {
+      onDeleteContact(deleteId);
+    }
   }
 
   return (
@@ -27,7 +29,7 @@ const ContactList: React.FC<ContactListProps> = ({contacts, onEditContact, editC
           filteredContacts.map((contact, index) => (
             <div key={contact.id}>
               <div>
-                {contact.image && <img src={URL.createObjectURL(contact.image)} alt={contact.name} width="100px" height="100px"/>}
+                {contact.image && <img src={contact.image} alt={contact.name} width="100px" height="100px"/>}
               </div>
                 <h3>{contact.name}</h3>
                 <p>Email: {contact.email}</p>

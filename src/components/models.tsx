@@ -4,7 +4,7 @@ export default interface Contact {
   email: string;
   phone: string;
   favorite: boolean;
-  image: File;
+  image: string;
 }
 
 
