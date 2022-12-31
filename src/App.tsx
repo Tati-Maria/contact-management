@@ -3,6 +3,7 @@ import ContactList from "./components/ContactList";
 import Home from "./pages/Home";
 import PageNotFound from "./pages/PageNotFound";
 import Contact from "./components/models";
+import './main.scss';
 import { useEffect, useState } from "react";
 import {Route, Routes} from "react-router-dom"
 

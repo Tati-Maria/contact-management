@@ -1,5 +1,6 @@
 import React, {useEffect, useState, useRef, ChangeEvent} from 'react';
 import Contact from './models';
+import {AiFillStar, AiOutlinePlus} from "react-icons/ai"
 import {v4 as uuid} from "uuid";
 
 interface ContactFormProps {
@@ -60,19 +61,31 @@ const handleImageChange = (event: ChangeEvent<HTMLInputElement>) => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className="form">
 
-      <input ref={imageInput} type="file" onChange={handleImageChange} accept="image/png, image/jpeg, image/gif"/>
+      <section className='form__container' aria-label='form container'>
 
-      <label htmlFor="name">Name: </label>
+      <div className="image-controller" aria-label='inputs controller'>
+      <input ref={imageInput} 
+      type="file"
+      id='files' 
+      onChange={handleImageChange} 
+      accept="image/png, image/jpeg, image/gif"/>
+      
+      <img src={image} alt={name} width="130px" height="130px" />
+      </div>
+
+      <div className="input-controller" aria-label='inputs controller'>
       <input type="text" 
       required
       id="name" value={name} 
       onChange={e => setName(e.target.value)}
       placeholder="Enter your contact name" 
       />
+      <label htmlFor="name">Name</label>
+      </div>
 
-      <label htmlFor="email">Email: </label>
+      <div className="input-controller" aria-label='inputs controller'>
       <input type="email" 
       value={email} 
       required
@@ -80,8 +93,10 @@ const handleImageChange = (event: ChangeEvent<HTMLInputElement>) => {
       placeholder='Enter your contact email'
       onChange={e => setEmail(e.target.value)}
        />
+      <label htmlFor="email">Email</label>
+      </div>
 
-       <label htmlFor="phone">Phone: </label>
+      <div className="input-controller" aria-label='inputs controller'>
        <input type="tel"
         name="phone" 
         id="phone"
@@ -91,19 +106,22 @@ const handleImageChange = (event: ChangeEvent<HTMLInputElement>) => {
         placeholder="###-###-####"
         accept='^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$'
         />
+       <label htmlFor="phone">Phone</label>
+      </div>
 
-         <label htmlFor="favorite">
-          <input type="checkbox" 
+      <div className="select-controller" aria-label='inputs controller'>
+          <input id='favorite' type="checkbox" 
           checked={isFavorite} 
           onChange={() => setIsFavorite(!isFavorite)} 
           />
-          Favorite
+         <label htmlFor="favorite">
+          Set as favorite contact <AiFillStar/>
          </label>
-
-         <button type='submit'>Add Contact</button>
-         
+      </div>
+         <button type='submit'><AiOutlinePlus/>Add Contact</button>
+      </section>
     </form>
   )
 }
 
-export default ContactForm
+export default ContactForm;

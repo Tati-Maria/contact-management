@@ -1,16 +1,19 @@
 import {Link, Outlet} from "react-router-dom";
-import { Nav, Container } from 'react-bootstrap';
+import {AiOutlineUserAdd} from "react-icons/ai"
 
 const NavBar = () => {
   return (
     <>
-    <Nav>
-        <Container>
-          <h2>My Contacts</h2>
-            <Link to="/contact-list">Contact List</Link>
-            <Link to="/contact-form">Add Contact</Link>
-        </Container>
-    </Nav>
+    <nav className="navbar">
+        <div className="navbar__container">
+        <h2 className="navbar__logo">My Contacts</h2>
+        <ul className="navbar__links">
+          <li>
+            <Link to="/contact-form"><AiOutlineUserAdd />Add Contact</Link>
+          </li>
+        </ul>
+        </div>
+    </nav>
     <Outlet />
     </>
   )

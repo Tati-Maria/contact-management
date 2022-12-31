@@ -1,0 +1,29 @@
+@mixin flex-center {
+    display: flex;
+    align-items: center;
+}
+
+@mixin navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+@mixin container {
+    width: min(100% - 20px, 1200px);
+    margin-inline: auto;
+}
+
+@mixin default-shadow{
+    box-shadow:  6px 6px hsl(0deg 0% 0% / 0.3);
+}
+
+@mixin btn {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 1rem 1.5rem;
+    font-size: 1.6rem;
+    border: none;
+    border-radius: 1rem;
+}

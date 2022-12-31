@@ -1,0 +1,39 @@
+@use "../abstract/mixins";
+@use "../abstract/variables";
+
+.navbar{
+   height: 10vh;
+   padding: 2rem 0;
+   background-color: variables.$extra-blue;
+   color: variables.$text-color;
+
+   &__container {
+    @include mixins.container;
+    @include mixins.navbar;
+   }
+
+   &__logo{
+    font-size: 3rem;
+   }
+
+   &__links{
+    list-style: none;
+    & a{
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        text-decoration: none;
+        background-color: variables.$text-color;
+        color: variables.$dark-clr;
+        padding: 1rem 1.5rem;
+        font-size: 1.6rem;
+        border-radius: 1rem;
+        @include mixins.default-shadow;
+        transition: 300ms ease;
+
+        &:hover{
+            scale: 1.1;
+        }
+    }
+   }
+}

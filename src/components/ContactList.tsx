@@ -1,4 +1,11 @@
 import Contact from './models';
+import {AiOutlineStar, 
+  AiOutlineEdit, 
+  AiOutlineDelete,
+  AiOutlineMail,
+  AiOutlinePhone,
+  AiOutlineProfile
+} from "react-icons/ai"
 import NoContacts from './NoContacts';
 
 interface ContactListProps {
@@ -31,13 +38,13 @@ const ContactList: React.FC<ContactListProps> = ({contacts, onEditContact, editC
               <div>
                 {contact.image && <img src={contact.image} alt={contact.name} width="100px" height="100px"/>}
               </div>
-                <h3>{contact.name}</h3>
-                <p>Email: {contact.email}</p>
-                <p>Phone: {contact.phone}</p>
+                <h3><AiOutlineProfile/>{contact.name}</h3>
+                <p><AiOutlineMail />Email: {contact.email}</p>
+                <p><AiOutlinePhone/>Phone: {contact.phone}</p>
                 {editContact?.email !== contact.email && 
                 (<>
-                <button onClick={() => onEditContact(contact)}>Edit</button>
-                <button onClick={() => handleDelete(contact.id!)}>Delete</button>
+                <button onClick={() => onEditContact(contact)}><AiOutlineEdit /> Edit</button>
+                <button onClick={() => handleDelete(contact.id!)}><AiOutlineDelete /> Delete</button>
                 </>)}
                 
             </div>

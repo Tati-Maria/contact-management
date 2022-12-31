@@ -1,0 +1,118 @@
+@use "../abstract/mixins";
+@use "../abstract/variables";
+
+.form{
+    margin: 4rem 0 5rem;
+    padding: 2rem 0;
+
+
+    &__container{
+        @include mixins.container
+    }
+
+    & .image-controller{
+        @include mixins.navbar;
+
+        & input[type=file] {
+            font-size: 1.2rem;
+        }
+
+        & img{
+            @include mixins.default-shadow;
+            object-fit: cover;
+        }
+    }
+
+    & .input-controller {
+        position: relative;
+        display: flex;
+        flex-direction: column-reverse;
+        justify-content: center;
+        gap: 0.6rem;
+        margin: 2rem 0;
+
+        & input{
+            width: 100%;
+        }
+
+        & label {
+            display: block;
+            font-size: 1.6rem;
+            color: variables.$dark-clr;
+            transition: 300ms ease;
+        }
+
+        & input[type = text], 
+        & input[type = tel],
+        & input[type = email] {
+            padding: 1.5rem 0;
+            border: none;
+            outline: none;
+            background: transparent;
+            font-size: 1.5rem;
+            border-bottom: 2px solid hsl(0, 1%, 77%);
+            transition: border-color 300ms;
+
+            &:focus +  label {
+                color: variables.$blue-clr;
+            }
+
+            &:focus {
+                border-bottom-color: variables.$blue-clr;
+                padding-left: 1rem;
+
+                &::placeholder{
+                    visibility: hidden;
+                }
+
+            }
+
+            &::placeholder{
+                opacity: 0.5;
+                padding-left: 1rem;
+            }
+        }
+    }
+
+    & .select-controller {
+        @include mixins.flex-center;
+        margin: 1rem 0 2rem;
+
+        & label {
+            @include mixins.flex-center;
+            gap: 0.5rem;
+            font-size: 2rem;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        & input[type=checkbox] {
+            display: none;
+
+           & + label {
+                color: #ccc;
+                font-style: italic;
+            }
+
+            &:checked + label {
+                font-style: normal;
+                color: variables.$favorite-clr;
+                font-weight: 600;
+            }
+        }
+
+    }
+
+    & button {
+        @include mixins.btn;
+        color: variables.$text-color;
+        background-color: variables.$extra-blue;
+        @include mixins.default-shadow;
+        cursor: pointer;
+        transition: 300ms ease;
+
+        &:hover{
+            scale: 1.1;
+        }
+    }
+}
