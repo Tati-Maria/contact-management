@@ -31,6 +31,8 @@ const ContactList: React.FC<ContactListProps> = ({contacts, onEditContact, editC
     }
   }
 
+  
+
   return (
     <div className='contact'>
      <div className="contact__container">
@@ -45,6 +47,7 @@ const ContactList: React.FC<ContactListProps> = ({contacts, onEditContact, editC
             <div key={contact.id} className="contact__cards">
               <div className='contact__cards-card'>
               <div>
+                <AiOutlineStar />
                 {contact.image && <img src={contact.image} alt={contact.name} width="100px" height="100px"/>}
               </div>
                 <h3><AiOutlineProfile/>{contact.name}</h3>
