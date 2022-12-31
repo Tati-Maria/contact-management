@@ -15,7 +15,8 @@ const ContactForm: React.FC<ContactFormProps> = ({onAddcontact, editContact}) =>
   const [phone, setPhone] = useState("");
   const [isFavorite, setIsFavorite] = useState(false);
   const [image, setImage] = useState("");
-  const imageInput = useRef<HTMLInputElement>(null)
+  const imageInput = useRef<HTMLImageElement>(null);
+  const inputImage = useRef<HTMLInputElement>(null);
 
   //pre-populate the form with the contact's information to edit
 
@@ -54,9 +55,13 @@ const handleImageChange = (event: ChangeEvent<HTMLInputElement>) => {
     setName("");
     setEmail("");
     setPhone("");
+    setImage("");
     setIsFavorite(false);
     if(imageInput.current) {
-      imageInput.current.value = "";
+      imageInput.current.src = "";
+    }
+    if(inputImage.current) {
+      inputImage.current.value = "";
     }
   };
 
@@ -66,13 +71,14 @@ const handleImageChange = (event: ChangeEvent<HTMLInputElement>) => {
       <section className='form__container' aria-label='form container'>
 
       <div className="image-controller" aria-label='inputs controller'>
-      <input ref={imageInput} 
+      <input
+      ref={inputImage}
       type="file"
       id='files' 
       onChange={handleImageChange} 
       accept="image/png, image/jpeg, image/gif"/>
       
-      <img src={image} alt={name} width="130px" height="130px" />
+      <img src={image} alt={name} ref={imageInput} width="130px" height="130px" />
       </div>
 
       <div className="input-controller" aria-label='inputs controller'>
