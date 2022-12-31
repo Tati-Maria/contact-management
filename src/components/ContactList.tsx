@@ -42,9 +42,10 @@ const ContactList: React.FC<ContactListProps> = ({contacts, onEditContact, editC
         {showFavoritesOnly ? "Show All" : "Show Favorites Only"}
         </button>
       </section>
+      <div className='contact__cards'>
         {contacts.length === 0 ? (<NoContacts />) : (
           filteredContacts.map((contact) => (
-            <div key={contact.id} className="contact__cards">
+            <div key={contact.id}>
               <div className='contact__cards-card'>
               <div>
                 <AiOutlineStar />
@@ -65,6 +66,7 @@ const ContactList: React.FC<ContactListProps> = ({contacts, onEditContact, editC
             </div>
         ))
         )} 
+      </div>
      </div>
     </div>
   )
