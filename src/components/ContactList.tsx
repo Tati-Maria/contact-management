@@ -48,7 +48,7 @@ const ContactList: React.FC<ContactListProps> = ({contacts, onEditContact, editC
             <div key={contact.id}>
               <div className='contact__cards-card'>
               <div>
-                <AiOutlineStar />
+                {!showFavoritesOnly ? "" : (<AiOutlineStar />)}
                 {contact.image && <img src={contact.image} alt={contact.name} width="100px" height="100px"/>}
               </div>
                 <h3><AiOutlineProfile/>{contact.name}</h3>
