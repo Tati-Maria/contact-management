@@ -1,0 +1,80 @@
+@use "../abstract/mixins";
+@use "../abstract/variables";
+
+.contact{
+    padding: 2rem 0;
+    background-color: variables.$text-color;
+
+    &__container{
+        @include mixins.container;
+    }
+
+    &__header{
+        @include mixins.navbar;
+        padding: 2rem 0;
+        margin: 1rem 0 4rem;
+
+        h1{
+            font-size: 3rem;
+        }
+
+        & button {
+            @include mixins.btn;
+            @include mixins.default-shadow;
+            cursor: pointer;
+            transition: 300ms ease;
+
+            &:active, 
+            &:focus, 
+            &:hover{
+                background-color: variables.$extra-blue;
+                color: variables.$text-color;
+            }
+        }
+    }
+
+    &__cards{
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1rem;
+        padding: 2rem 0;
+        margin: 0 0 2rem;
+
+        &-card{
+            background-color: variables.$blue-clr;
+            color: variables.$text-color;
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+            @include mixins.default-shadow;
+            border-radius: 1rem;
+            font-size: 1.6rem;
+
+            & > *{
+                @include mixins.flex-center;
+                gap: 0.5rem;
+            }
+
+            & button {
+                @include mixins.btn;
+                cursor: pointer;
+                transition: 300ms ease;
+
+                &:hover{
+                    scale: 1.1;
+                }
+
+                &:first-of-type svg {
+                    color: variables.$red-clr;
+                    
+                }
+
+                &:last-of-type svg {
+                    color: variables.$dark-clr;
+                }
+            }
+        }
+    }
+}

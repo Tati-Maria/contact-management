@@ -1,11 +1,9 @@
 import ContactForm from "./components/ContactForm";
 import ContactList from "./components/ContactList";
-import Home from "./pages/Home";
-import PageNotFound from "./pages/PageNotFound";
 import Contact from "./components/models";
 import './main.scss';
 import { useEffect, useState } from "react";
-import {Route, Routes} from "react-router-dom"
+import NavBar from "./components/NavBar";
 
 //Retrive data from the local storage
 const storedContacts = localStorage.getItem("contacts");
@@ -23,7 +21,7 @@ const App: React.FC = () => {
 
 
 
-  const handleAddContact = (contact: Contact) => {
+const handleAddContact = (contact: Contact) => {
     if(isEditing) {
       const updatedContacts = contacts.map((c) => {
         if(c.id === editContact?.id) {
@@ -41,10 +39,10 @@ const App: React.FC = () => {
 }
 
 
-  const handleEditContact = (contact: Contact) => {
+const handleEditContact = (contact: Contact) => {
     setIsEditing(true);
     setEditContact(contact)
-  }
+}
   
   //Delete a contact
   const handleDeleteContact = (id: string) => {
@@ -55,21 +53,7 @@ const App: React.FC = () => {
   return (
 
     <>
-    <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/contact-form" element={<ContactForm onAddcontact={function (contact: Contact): void {
-          throw new Error("Function not implemented.");
-        } } />} />
-      <Route path="/contact-list" element={<ContactList contacts={[]} onEditContact={function (contact: Contact): void {
-          throw new Error("Function not implemented.");
-        } } onDeleteContact={function (email: string): void {
-          throw new Error("Function not implemented.");
-        } } editContact={null} showFavoritesOnly={false} />} />
-      <Route path="*"errorElement={<PageNotFound />} />
-    </Routes>
-    <button onClick={() => setShowFavoritesOnly(!showFavoritesOnly)}>
-      {showFavoritesOnly ? "Show All" : "Show Favorites Only"}
-    </button>
+    <NavBar />
       <ContactForm 
       onAddcontact={handleAddContact} 
       editContact={editContact} 
@@ -80,6 +64,7 @@ const App: React.FC = () => {
       editContact={editContact} 
       onDeleteContact={handleDeleteContact}
       showFavoritesOnly={showFavoritesOnly}
+      setShowFavoritesOnly={setShowFavoritesOnly}
       />
     </>
   )
