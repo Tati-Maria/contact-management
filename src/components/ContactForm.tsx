@@ -17,6 +17,7 @@ const ContactForm: React.FC<ContactFormProps> = ({onAddcontact, editContact}) =>
   const [image, setImage] = useState("");
   const imageInput = useRef<HTMLImageElement>(null);
   const inputImage = useRef<HTMLInputElement>(null);
+  const [error, setError] = useState("");
 
   //pre-populate the form with the contact's information to edit
 
@@ -46,8 +47,8 @@ const handleImageChange = (event: ChangeEvent<HTMLInputElement>) => {
 //Submit the form
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    if(name === "" || phone === "" || email === "") {
-      //display an error message
+    if(name.length === 0 && phone.length === 0 && email.length === 0) {
+      setError("Name, email and phone number are required fields");
       return;
     }
     const contact: Contact = {id: uuid(), name, email, phone, favorite: isFavorite, image: image };
@@ -67,7 +68,7 @@ const handleImageChange = (event: ChangeEvent<HTMLInputElement>) => {
 
   return (
     <form onSubmit={handleSubmit} className="form">
-
+      {error && <p>{error}</p>}
       <section className='form__container' aria-label='form container'>
 
       <div className="image-controller" aria-label='inputs controller'>

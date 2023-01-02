@@ -12,6 +12,7 @@
 
     & .image-controller{
         @include mixins.navbar;
+        flex-wrap: wrap;
 
         & input[type=file] {
             font-size: 1.2rem;

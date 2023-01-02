@@ -24,7 +24,6 @@ const ContactList: React.FC<ContactListProps> = ({contacts, onEditContact, editC
   : contacts;
 
   const handleDelete =(id: string) => {
-    //the contact list will only have an id after its submition
     const deleteId = id || '';
     if(confirm("Are you sure you want to delete this contact?")) {
       onDeleteContact(deleteId);
