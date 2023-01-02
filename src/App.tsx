@@ -46,7 +46,6 @@ const handleEditContact = (contact: Contact) => {
   
   //Delete a contact
   const handleDeleteContact = (id: string) => {
-    //remove the contact based on email since we don't have an id
     setContacts(contacts.filter((c) => c.id !== id))
   }
 
