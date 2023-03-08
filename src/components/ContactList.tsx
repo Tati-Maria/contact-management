@@ -17,7 +17,14 @@ interface ContactListProps {
     setShowFavoritesOnly: (showFavoritesOnly: boolean) => void;
 }
 
-const ContactList: React.FC<ContactListProps> = ({contacts, onEditContact, editContact, onDeleteContact, showFavoritesOnly, setShowFavoritesOnly}) => {
+const ContactList: React.FC<ContactListProps> = (
+  {contacts, 
+    onEditContact, 
+    editContact, 
+    onDeleteContact, 
+    showFavoritesOnly, 
+    setShowFavoritesOnly}
+  ) => {
   //filter the contact list between favorites and not favorites
   const filteredContacts = showFavoritesOnly 
   ? contacts.filter((c) => c.favorite) 
